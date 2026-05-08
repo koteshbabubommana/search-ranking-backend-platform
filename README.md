@@ -59,3 +59,28 @@ search-ranking-backend-platform/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
+
+---
+
+## Features
+
+- FastAPI backend architecture
+- Product search and ranking
+- Custom relevance scoring
+- Filtering and pagination
+- Dockerized deployment
+- GitHub Actions CI/CD
+- Automated testing with Pytest
+- Live deployment on Render
+
+---
+
+## Live API
+
+### Swagger Docs
+https://search-ranking-backend-platform.onrender.com/docs
+
+### Search Example
+https://search-ranking-backend-platform.onrender.com/search?query=laptop
+
+---
