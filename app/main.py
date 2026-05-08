@@ -1,7 +1,9 @@
-from fastapi import FastAPI
-from app.search import search_products
 from typing import Optional
 import time
+
+from fastapi import FastAPI
+
+from app.search import search_products
 
 app = FastAPI()
 

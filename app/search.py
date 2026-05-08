@@ -1,28 +1,7 @@
 from typing import Optional
 
-products = [
-    {"id": 1, "name": "Apple MacBook Pro", "category": "Electronics", "price": 1899, "rating": 4.8, "popularity": 95},
-    {"id": 2, "name": "Dell XPS 13 Laptop", "category": "Electronics", "price": 1299, "rating": 4.6, "popularity": 88},
-    {"id": 3, "name": "Sony Wireless Headphones", "category": "Electronics", "price": 299, "rating": 4.7, "popularity": 91},
-    {"id": 4, "name": "Nike Running Shoes", "category": "Fashion", "price": 140, "rating": 4.5, "popularity": 84},
-    {"id": 5, "name": "Adidas Training Shoes", "category": "Fashion", "price": 120, "rating": 4.4, "popularity": 79},
-    {"id": 6, "name": "Python Programming Book", "category": "Books", "price": 45, "rating": 4.9, "popularity": 76},
-    {"id": 7, "name": "System Design Interview Book", "category": "Books", "price": 55, "rating": 4.8, "popularity": 89},
-]
-
-
-def calculate_ranking_score(product: dict, query: str) -> float:
-    name_match_score = 1.0 if query.lower() in product["name"].lower() else 0.0
-    rating_score = product["rating"] / 5
-    popularity_score = product["popularity"] / 100
-
-    final_score = (
-        (name_match_score * 0.5)
-        + (rating_score * 0.3)
-        + (popularity_score * 0.2)
-    )
-
-    return round(final_score, 4)
+from app.database import products
+from app.ranking import calculate_ranking_score
 
 
 def search_products(
@@ -36,7 +15,6 @@ def search_products(
     results = []
 
     for product in products:
-
         if query.lower() not in product["name"].lower():
             continue
 
@@ -50,21 +28,12 @@ def search_products(
             continue
 
         product_copy = product.copy()
-
-        product_copy["ranking_score"] = calculate_ranking_score(
-            product,
-            query,
-        )
-
+        product_copy["ranking_score"] = calculate_ranking_score(product, query)
         results.append(product_copy)
 
-    results.sort(
-        key=lambda item: item["ranking_score"],
-        reverse=True,
-    )
+    results.sort(key=lambda item: item["ranking_score"], reverse=True)
 
     total_results = len(results)
-
     paginated_results = results[offset: offset + limit]
 
     return {
